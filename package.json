@@ -1,0 +1,32 @@
+{
+  "name": "contact-enrichment-accelerator",
+  "version": "1.0.0",
+  "description": "Inspect any Salesforce org and generate a tailored, AI-powered Contact Enrichment package (screen flow + JSON-output prompt -> suggestion records with accept/dismiss/history, permission sets).",
+  "type": "module",
+  "bin": {
+    "enrich": "src/cli.js"
+  },
+  "scripts": {
+    "inspect": "node src/cli.js inspect",
+    "configure": "node src/cli.js configure",
+    "generate": "node src/cli.js generate",
+    "deploy": "node src/cli.js deploy"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.8",
+    "prompts": "^2.4.2"
+  },
+  "license": "MIT",
+  "keywords": [
+    "salesforce",
+    "einstein",
+    "prompt-builder",
+    "agentforce",
+    "data-enrichment",
+    "contact",
+    "accelerator"
+  ]
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enrichment_Source_Data__c</fullName>
+    <description>TRANSIENT DEMO SCAFFOLD. Optional JSON used to simulate a third-party enrichment provider (e.g. ZoomInfo) before its package is installed. The live web-search signal does NOT require this field. In production, replace with the provider's own object / Enrich API rather than maintaining a copy here.</description>
+    <inlineHelpText>Optional JSON used to simulate a third-party enrichment source. Not required for the live web-search signal.</inlineHelpText>
+    <label>Enrichment Source Data</label>
+    <length>32768</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>4</visibleLines>
+</CustomField>

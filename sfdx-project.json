@@ -1,0 +1,12 @@
+{
+  "packageDirectories": [
+    {
+      "path": "generated/force-app",
+      "default": true
+    }
+  ],
+  "name": "contact-enrichment-accelerator",
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "66.0"
+}

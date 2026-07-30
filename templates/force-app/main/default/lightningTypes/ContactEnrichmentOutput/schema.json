@@ -1,0 +1,218 @@
+{
+  "title" : "Contact Enrichment Output",
+  "lightning:type" : "lightning__objectType",
+  "properties" : {
+    "SuggestionCount" : {
+      "description" : "Number of valid suggestions found (0-5)",
+      "lightning:type" : "lightning__textType",
+      "title" : "SuggestionCount"
+    },
+    "OverallAssessment" : {
+      "description" : "Summary assessment of the contact data quality",
+      "lightning:type" : "lightning__textType",
+      "title" : "OverallAssessment"
+    },
+    "Suggestion1FieldApiName" : {
+      "description" : "API name of the Contact field for suggestion 1",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1FieldApiName"
+    },
+    "Suggestion1FieldLabel" : {
+      "description" : "Human-readable label for suggestion 1",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1FieldLabel"
+    },
+    "Suggestion1CurrentValue" : {
+      "description" : "Current {{crmName}} value for suggestion 1",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1CurrentValue"
+    },
+    "Suggestion1SuggestedValue" : {
+      "description" : "Recommended new value for suggestion 1",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1SuggestedValue"
+    },
+    "Suggestion1Source" : {
+      "description" : "Data source for suggestion 1 (Web_Search, LinkedIn, ZoomInfo, Company_Website, News, Internal_Analysis)",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1Source"
+    },
+    "Suggestion1Confidence" : {
+      "description" : "Confidence score 1-100 for suggestion 1",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1Confidence"
+    },
+    "Suggestion1Rationale" : {
+      "description" : "Explanation for why suggestion 1 is recommended",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1Rationale"
+    },
+    "Suggestion1Category" : {
+      "description" : "Category for suggestion 1 (Title_Change, Status_Change, Department_Change, Contact_Info, Role_Change, Company_Change, Other)",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion1Category"
+    },
+    "Suggestion2FieldApiName" : {
+      "description" : "API name of the Contact field for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2FieldApiName"
+    },
+    "Suggestion2FieldLabel" : {
+      "description" : "Human-readable label for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2FieldLabel"
+    },
+    "Suggestion2CurrentValue" : {
+      "description" : "Current {{crmName}} value for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2CurrentValue"
+    },
+    "Suggestion2SuggestedValue" : {
+      "description" : "Recommended new value for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2SuggestedValue"
+    },
+    "Suggestion2Source" : {
+      "description" : "Data source for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2Source"
+    },
+    "Suggestion2Confidence" : {
+      "description" : "Confidence score 1-100 for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2Confidence"
+    },
+    "Suggestion2Rationale" : {
+      "description" : "Explanation for why suggestion 2 is recommended",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2Rationale"
+    },
+    "Suggestion2Category" : {
+      "description" : "Category for suggestion 2",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion2Category"
+    },
+    "Suggestion3FieldApiName" : {
+      "description" : "API name of the Contact field for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3FieldApiName"
+    },
+    "Suggestion3FieldLabel" : {
+      "description" : "Human-readable label for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3FieldLabel"
+    },
+    "Suggestion3CurrentValue" : {
+      "description" : "Current {{crmName}} value for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3CurrentValue"
+    },
+    "Suggestion3SuggestedValue" : {
+      "description" : "Recommended new value for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3SuggestedValue"
+    },
+    "Suggestion3Source" : {
+      "description" : "Data source for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3Source"
+    },
+    "Suggestion3Confidence" : {
+      "description" : "Confidence score 1-100 for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3Confidence"
+    },
+    "Suggestion3Rationale" : {
+      "description" : "Explanation for why suggestion 3 is recommended",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3Rationale"
+    },
+    "Suggestion3Category" : {
+      "description" : "Category for suggestion 3",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion3Category"
+    },
+    "Suggestion4FieldApiName" : {
+      "description" : "API name of the Contact field for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4FieldApiName"
+    },
+    "Suggestion4FieldLabel" : {
+      "description" : "Human-readable label for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4FieldLabel"
+    },
+    "Suggestion4CurrentValue" : {
+      "description" : "Current {{crmName}} value for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4CurrentValue"
+    },
+    "Suggestion4SuggestedValue" : {
+      "description" : "Recommended new value for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4SuggestedValue"
+    },
+    "Suggestion4Source" : {
+      "description" : "Data source for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4Source"
+    },
+    "Suggestion4Confidence" : {
+      "description" : "Confidence score 1-100 for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4Confidence"
+    },
+    "Suggestion4Rationale" : {
+      "description" : "Explanation for why suggestion 4 is recommended",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4Rationale"
+    },
+    "Suggestion4Category" : {
+      "description" : "Category for suggestion 4",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion4Category"
+    },
+    "Suggestion5FieldApiName" : {
+      "description" : "API name of the Contact field for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5FieldApiName"
+    },
+    "Suggestion5FieldLabel" : {
+      "description" : "Human-readable label for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5FieldLabel"
+    },
+    "Suggestion5CurrentValue" : {
+      "description" : "Current {{crmName}} value for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5CurrentValue"
+    },
+    "Suggestion5SuggestedValue" : {
+      "description" : "Recommended new value for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5SuggestedValue"
+    },
+    "Suggestion5Source" : {
+      "description" : "Data source for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5Source"
+    },
+    "Suggestion5Confidence" : {
+      "description" : "Confidence score 1-100 for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5Confidence"
+    },
+    "Suggestion5Rationale" : {
+      "description" : "Explanation for why suggestion 5 is recommended",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5Rationale"
+    },
+    "Suggestion5Category" : {
+      "description" : "Category for suggestion 5",
+      "lightning:type" : "lightning__textType",
+      "title" : "Suggestion5Category"
+    }
+  },
+  "required" : [ ],
+  "description" : "Structured output for contact enrichment analysis comparing {{crmName}} data to external sources"
+}

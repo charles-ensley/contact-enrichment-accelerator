@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dismiss_Reason__c</fullName>
+    <description>Reason the rep dismissed this enrichment suggestion. Used for reporting on suggestion quality and rep feedback.</description>
+    <label>Dismiss Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Already Correct</fullName>
+                <default>false</default>
+                <label>Already Correct</label>
+            </value>
+            <value>
+                <fullName>Suggestion Inaccurate</fullName>
+                <default>false</default>
+                <label>Suggestion Inaccurate</label>
+            </value>
+            <value>
+                <fullName>Wrong Contact</fullName>
+                <default>false</default>
+                <label>Wrong Contact</label>
+            </value>
+            <value>
+                <fullName>Source Outdated</fullName>
+                <default>false</default>
+                <label>Source Outdated</label>
+            </value>
+            <value>
+                <fullName>Duplicate Contact</fullName>
+                <default>false</default>
+                <label>Duplicate Contact</label>
+            </value>
+            <value>
+                <fullName>No Longer Relevant</fullName>
+                <default>false</default>
+                <label>No Longer Relevant</label>
+            </value>
+            <value>
+                <fullName>Will Verify Manually</fullName>
+                <default>false</default>
+                <label>Will Verify Manually</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

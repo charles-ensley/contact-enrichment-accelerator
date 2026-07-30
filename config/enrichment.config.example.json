@@ -1,0 +1,42 @@
+{
+  "companyName": "Acme Corp",
+  "companyDescription": "a global manufacturer of industrial equipment",
+  "crmName": "Salesforce",
+  "targetObject": "Contact",
+  "webSearchProvider": "openai",
+  "webSearchQuery": "{!$Input:Contact.Name} {!$Input:Contact.Account.Name} current employer and job title - latest role or departure news",
+  "fields": [
+    { "apiName": "Title", "label": "Title", "type": "string", "description": "job title (free text)", "custom": false },
+    { "apiName": "Department", "label": "Department", "type": "string", "description": "department (free text)", "custom": false },
+    { "apiName": "Email", "label": "Email", "type": "email", "description": "business email", "custom": false },
+    { "apiName": "Phone", "label": "Phone", "type": "phone", "description": "business phone", "custom": false },
+    { "apiName": "MobilePhone", "label": "Mobile", "type": "phone", "description": "mobile phone", "custom": false },
+    { "apiName": "MailingCity", "label": "Mailing City", "type": "string", "description": "city", "custom": false },
+    { "apiName": "MailingState", "label": "Mailing State", "type": "string", "description": "state/province", "custom": false },
+    {
+      "apiName": "Title_Level__c",
+      "label": "Title Level",
+      "type": "picklist",
+      "description": "seniority level",
+      "custom": true,
+      "restrictedPicklist": true,
+      "picklistValues": ["C-Level", "VP", "Director", "Manager", "Individual Contributor"]
+    }
+  ],
+  "sources": ["Web_Search", "LinkedIn", "ZoomInfo", "Company_Website", "News", "Internal_Analysis"],
+  "linkedIn": {
+    "enabled": true,
+    "departureFieldApiName": "LID__No_longer_at_Company__c",
+    "departureValue": "Not at Company",
+    "statusFieldApiName": "Contact_Status__c",
+    "statusDepartedValue": "No longer employed here"
+  },
+  "zoomInfo": {
+    "simulationField": true
+  },
+  "options": {
+    "includeAutoCaptureFlow": true,
+    "includeDemoPage": true,
+    "includeRetentionJob": true
+  }
+}

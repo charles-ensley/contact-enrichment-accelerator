@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/contact-enrichment-accelerator/config",
+  "title": "Contact Enrichment Accelerator configuration",
+  "description": "Drives generation of the tailored, deployable Contact Enrichment package. Usually produced by `enrich inspect` and refined by `enrich configure`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["companyName", "crmName", "targetObject", "fields", "sources"],
+  "properties": {
+    "companyName": {
+      "type": "string",
+      "description": "Customer company name used in the AI prompt persona (e.g. 'Acme Corp')."
+    },
+    "companyDescription": {
+      "type": "string",
+      "description": "Optional one-line description of the company/industry to ground the prompt persona (e.g. 'a global manufacturer of industrial equipment')."
+    },
+    "crmName": {
+      "type": "string",
+      "description": "Display name for the CRM used in UI and prompt text. Defaults to 'Salesforce'; set to a brand name only if the customer white-labels their CRM.",
+      "default": "Salesforce"
+    },
+    "targetObject": {
+      "type": "string",
+      "description": "SObject being enriched. v1 supports 'Contact'.",
+      "enum": ["Contact"],
+      "default": "Contact"
+    },
+    "webSearchProvider": {
+      "type": "string",
+      "description": "Provider passed to the Salesforce 'Search the Web' data action.",
+      "default": "openai"
+    },
+    "webSearchQuery": {
+      "type": "string",
+      "description": "Merge-field query expression used for the web search data action."
+    },
+    "fields": {
+      "type": "array",
+      "description": "Write-back target fields the AI may suggest updates for. Discovered from the org describe and confirmed by the user.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["apiName", "label", "type"],
+        "properties": {
+          "apiName": { "type": "string", "description": "Exact field API name (e.g. 'Title', 'Status__c')." },
+          "label": { "type": "string", "description": "Human-readable field label." },
+          "type": {
+            "type": "string",
+            "description": "Simplified field type.",
+            "enum": ["string", "textarea", "picklist", "email", "phone", "url", "reference", "combobox"]
+          },
+          "description": { "type": "string", "description": "Short meaning shown to the model." },
+          "custom": { "type": "boolean", "description": "True if a custom field (needs explicit FLS in the permission sets)." },
+          "restrictedPicklist": { "type": "boolean", "description": "True if a restricted picklist (suggested value must match an allowed value)." },
+          "picklistValues": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Allowed picklist values (for picklist fields)."
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Allowed provenance values written to the suggestion Source picklist.",
+      "items": {
+        "type": "string",
+        "enum": ["Web_Search", "LinkedIn", "ZoomInfo", "Company_Website", "News", "Internal_Analysis"]
+      },
+      "minItems": 1
+    },
+    "linkedIn": {
+      "type": "object",
+      "description": "LinkedIn Sales Navigator 'no longer at company' signal, wired in only when the field exists in the org.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "departureFieldApiName": { "type": "string", "description": "API name of the 'no longer at company' field (e.g. 'LID__No_longer_at_Company__c')." },
+        "departureValue": { "type": "string", "description": "Value that signals a departure (e.g. 'Not at Company').", "default": "Not at Company" },
+        "statusFieldApiName": { "type": "string", "description": "Status field to update on confirmed departure (e.g. 'Status__c')." },
+        "statusDepartedValue": { "type": "string", "description": "Status value meaning 'left this employer' (e.g. 'No longer employed here')." }
+      }
+    },
+    "zoomInfo": {
+      "type": "object",
+      "description": "ZoomInfo source configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "simulationField": {
+          "type": "boolean",
+          "description": "Include the transient Enrichment_Source_Data__c scaffold + seed script to demo the ZoomInfo source before the ZoomInfo package is installed.",
+          "default": false
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "includeAutoCaptureFlow": {
+          "type": "boolean",
+          "description": "Include the (inactive) record-triggered flow that auto-creates a departure suggestion from the LinkedIn signal. Requires linkedIn.enabled.",
+          "default": false
+        },
+        "includeDemoPage": {
+          "type": "boolean",
+          "description": "Include a clean demo Lightning record page (FlexiPage) with the widget + suggestions related list.",
+          "default": true
+        },
+        "includeRetentionJob": {
+          "type": "boolean",
+          "description": "Include the schedulable data-retention job that purges old dismissed suggestions.",
+          "default": true
+        }
+      }
+    }
+  }
+}

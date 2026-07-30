@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <description>Classification of the type of enrichment change being suggested.</description>
+    <label>Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Title_Change</fullName>
+                <default>false</default>
+                <label>Title Change</label>
+            </value>
+            <value>
+                <fullName>Status_Change</fullName>
+                <default>false</default>
+                <label>Status Change</label>
+            </value>
+            <value>
+                <fullName>Department_Change</fullName>
+                <default>false</default>
+                <label>Department Change</label>
+            </value>
+            <value>
+                <fullName>Contact_Info</fullName>
+                <default>false</default>
+                <label>Contact Info</label>
+            </value>
+            <value>
+                <fullName>Role_Change</fullName>
+                <default>false</default>
+                <label>Role Change</label>
+            </value>
+            <value>
+                <fullName>Company_Change</fullName>
+                <default>false</default>
+                <label>Company Change</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

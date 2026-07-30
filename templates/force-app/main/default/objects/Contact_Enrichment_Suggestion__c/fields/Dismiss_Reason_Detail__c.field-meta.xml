@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dismiss_Reason_Detail__c</fullName>
+    <description>Free-text detail for the dismiss reason. Required by the widget only when the rep selects "Other".</description>
+    <label>Dismiss Reason Detail</label>
+    <length>500</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

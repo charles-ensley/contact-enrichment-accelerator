@@ -1,0 +1,26 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Generated deployable package (produced per customer org by `enrich generate`)
+generated/
+
+# Inspection reports (may contain org-specific field/schema details)
+reports/
+
+# Customer-specific config produced by inspect/configure
+config/enrichment.config.json
+config/enrichment.config.previous.json
+
+# Salesforce CLI / local dev
+.sf/
+.sfdx/
+.localdevserver/
+*.log
+
+# Editor / IDE
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store

@@ -1,0 +1,212 @@
+<template>
+    <lightning-card icon-name="standard:contact_request">
+        <span slot="title">
+            Contact Enrichment
+            <template lwc:if={pendingCount}>
+                <lightning-badge label={pendingBadge} class="slds-m-left_x-small badge-pending"></lightning-badge>
+            </template>
+        </span>
+        <div slot="actions" class="slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+            <lightning-button
+                label="Run Enrichment Check"
+                variant="neutral"
+                icon-name="utility:einstein"
+                onclick={handleRunCheck}
+                disabled={actionsDisabled}
+                class="slds-m-right_x-small">
+            </lightning-button>
+            <template lwc:if={hasPending}>
+                <lightning-button
+                    label="Accept All"
+                    variant="brand"
+                    icon-name="utility:check"
+                    onclick={handleAcceptAll}
+                    disabled={actionsDisabled}
+                    class="slds-m-right_x-small">
+                </lightning-button>
+            </template>
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                alternative-text="Refresh"
+                onclick={handleRefresh}
+                disabled={actionsDisabled}>
+            </lightning-button-icon>
+        </div>
+
+        <template lwc:if={showFlow}>
+            <div class="slds-p-around_small inline-flow">
+                <lightning-flow
+                    flow-api-name={flowApiName}
+                    flow-input-variables={flowInputVariables}
+                    onstatuschange={handleFlowStatusChange}>
+                </lightning-flow>
+                <div class="slds-grid slds-grid_align-end slds-m-top_x-small">
+                    <lightning-button
+                        label="Cancel"
+                        variant="neutral"
+                        size="small"
+                        onclick={handleCloseFlow}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <template lwc:if={showBody}>
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={error}>
+            <div class="slds-p-around_medium">
+                <p class="slds-text-color_error">Error loading enrichment suggestions.</p>
+            </div>
+        </template>
+
+        <template lwc:if={hasPending}>
+            <div class="slds-p-horizontal_small slds-p-bottom_small">
+                <template for:each={pendingSuggestions} for:item="sug">
+                    <div key={sug.Id} class="suggestion-card slds-m-bottom_x-small slds-p-around_small">
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+                            <div class="slds-col slds-grow">
+                                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                    <span class="slds-badge badge-category">{sug.categoryLabel}</span>
+                                    <span class="slds-badge slds-m-left_xx-small badge-source">
+                                        <lightning-icon icon-name={sug.sourceIcon} size="xx-small" class="slds-m-right_xxx-small badge-source-icon"></lightning-icon>
+                                        {sug.sourceLabel}
+                                    </span>
+                                    <span class="confidence-pill slds-m-left_xx-small" title="AI Confidence">
+                                        <lightning-icon icon-name={sug.confidenceIcon} size="xx-small" class="slds-m-right_xxx-small"></lightning-icon>
+                                        {sug.Confidence__c}%
+                                    </span>
+                                </div>
+                                <p class="slds-text-title_caps slds-m-bottom_xxx-small field-label">{sug.Field_Label__c}</p>
+                                <div class="value-comparison slds-m-bottom_xx-small">
+                                    <span class="current-value">{sug.Current_Value__c}</span>
+                                    <lightning-icon icon-name="utility:forward" size="xx-small" class="arrow-icon slds-m-horizontal_xx-small"></lightning-icon>
+                                    <span class="suggested-value">{sug.Suggested_Value__c}</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak rationale-text">{sug.Rationale__c}</p>
+                            </div>
+                            <div class="slds-col slds-shrink-none slds-m-left_small action-buttons">
+                                <lightning-button
+                                    label="Accept"
+                                    variant="brand"
+                                    size="small"
+                                    data-id={sug.Id}
+                                    onclick={handleAccept}
+                                    disabled={isProcessing}
+                                    class="slds-m-bottom_xx-small">
+                                </lightning-button>
+                                <lightning-button
+                                    label="Dismiss"
+                                    variant="neutral"
+                                    size="small"
+                                    data-id={sug.Id}
+                                    onclick={handleDismiss}
+                                    disabled={isProcessing}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                        <template lwc:if={sug.showDismissPanel}>
+                            <div class="dismiss-panel slds-m-top_x-small slds-p-around_small">
+                                <p class="slds-text-title_caps slds-m-bottom_xx-small field-label">Why dismiss this suggestion?</p>
+                                <lightning-combobox
+                                    name="dismissReason"
+                                    label="Dismiss reason"
+                                    variant="label-hidden"
+                                    placeholder="Select a reason"
+                                    value={dismissReason}
+                                    options={dismissReasonOptions}
+                                    onchange={handleReasonChange}>
+                                </lightning-combobox>
+                                <template lwc:if={isOtherReason}>
+                                    <lightning-textarea
+                                        name="dismissReasonDetail"
+                                        label="Please describe"
+                                        class="slds-m-top_xx-small"
+                                        placeholder="Add a short note explaining why"
+                                        value={dismissReasonDetail}
+                                        max-length="500"
+                                        onchange={handleReasonDetailChange}
+                                        required>
+                                    </lightning-textarea>
+                                </template>
+                                <div class="slds-grid slds-grid_align-end slds-m-top_x-small">
+                                    <lightning-button
+                                        label="Cancel"
+                                        variant="neutral"
+                                        size="small"
+                                        onclick={handleCancelDismiss}
+                                        disabled={isProcessing}
+                                        class="slds-m-right_xx-small">
+                                    </lightning-button>
+                                    <lightning-button
+                                        label="Confirm Dismiss"
+                                        variant="destructive"
+                                        size="small"
+                                        data-id={sug.Id}
+                                        onclick={handleConfirmDismiss}
+                                        disabled={confirmDismissDisabled}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <template lwc:if={showEmptyState}>
+            <div class="slds-align_absolute-center slds-p-around_large">
+                <div class="slds-text-align_center">
+                    <lightning-icon icon-name="utility:check" size="large" class="slds-m-bottom_small icon-success"></lightning-icon>
+                    <p class="slds-text-heading_small slds-m-bottom_x-small">Contact Data Up to Date</p>
+                    <p class="slds-text-body_regular slds-text-color_weak">No enrichment suggestions at this time.</p>
+                </div>
+            </div>
+        </template>
+
+        <template lwc:if={hasReviewedSuggestions}>
+            <div class="slds-p-horizontal_small slds-p-bottom_small">
+                <button class="slds-button slds-button_neutral slds-m-bottom_x-small history-toggle" onclick={toggleHistory}>
+                    <lightning-icon icon-name={historyIcon} size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                    {historyLabel} ({reviewedCount})
+                </button>
+                <template lwc:if={showHistory}>
+                    <template for:each={reviewedSuggestions} for:item="sug">
+                        <div key={sug.Id} class="suggestion-card reviewed slds-m-bottom_x-small slds-p-around_small">
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class={sug.statusBadgeClass}>
+                                    <lightning-icon icon-name={sug.statusIcon} size="xx-small" class="slds-m-right_xxx-small"></lightning-icon>
+                                    {sug.Status__c}
+                                </span>
+                                <span class="slds-m-left_x-small slds-text-body_small">
+                                    <strong>{sug.Field_Label__c}:</strong>
+                                    {sug.Current_Value__c} &rarr; {sug.Suggested_Value__c}
+                                </span>
+                                <template lwc:if={sug.reviewerName}>
+                                    <span class="slds-m-left_x-small slds-text-body_small slds-text-color_weak">
+                                        by {sug.reviewerName}
+                                    </span>
+                                </template>
+                            </div>
+                            <template lwc:if={sug.hasDismissReason}>
+                                <div class="slds-m-top_xx-small slds-text-body_small slds-text-color_weak dismiss-reason-history">
+                                    <template lwc:if={sug.dismissReasonLabel}>
+                                        <span><strong>Reason:</strong> {sug.dismissReasonLabel}</span>
+                                    </template>
+                                    <template lwc:if={sug.Dismiss_Reason_Detail__c}>
+                                        <span class="slds-d-block">&ldquo;{sug.Dismiss_Reason_Detail__c}&rdquo;</span>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </template>
+        </template>
+    </lightning-card>
+</template>

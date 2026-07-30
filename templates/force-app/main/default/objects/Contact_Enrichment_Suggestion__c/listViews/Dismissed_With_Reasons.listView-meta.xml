@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dismissed_With_Reasons</fullName>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Field_Label__c</columns>
+    <columns>Current_Value__c</columns>
+    <columns>Suggested_Value__c</columns>
+    <columns>Source__c</columns>
+    <columns>Dismiss_Reason__c</columns>
+    <columns>Dismiss_Reason_Detail__c</columns>
+    <columns>Reviewed_Date__c</columns>
+    <columns>Reviewed_By__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Dismissed</value>
+    </filters>
+    <label>Dismissed - With Reasons</label>
+    <language>en_US</language>
+</ListView>
