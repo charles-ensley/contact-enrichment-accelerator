@@ -66,6 +66,7 @@ config/enrichment.config.json
 | LWC html/css/js core | Widget CRM label |
 | Apex controller (+ retention job) + tests | Auto-capture flow (fields + conditional) |
 | Custom permission, quick action | ZoomInfo simulation field + seed script (conditional) |
+| Report type, "All Enrichment Suggestions" report, report folder | — |
 
 ## Design choices
 

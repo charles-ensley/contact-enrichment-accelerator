@@ -1,7 +1,9 @@
 import { LightningElement, api, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
+import { getRecord, getFieldValue, notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import hasAdminPermission from '@salesforce/customPermission/Contact_Enrichment_Admin';
+import LAST_CHECK_FIELD from '@salesforce/schema/Contact.Last_Enrichment_Check__c';
 import getSuggestions from '@salesforce/apex/ContactEnrichmentController.getSuggestions';
 import acceptSuggestion from '@salesforce/apex/ContactEnrichmentController.acceptSuggestion';
 import dismissSuggestion from '@salesforce/apex/ContactEnrichmentController.dismissSuggestion';
@@ -60,6 +62,9 @@ export default class ContactEnrichmentWidget extends LightningElement {
     activeDismissId;
     dismissReason = '';
     dismissReasonDetail = '';
+    lastCheckDate;
+    recordLoaded = false;
+    expandedRationale = {};
 
     dismissReasonOptions = DISMISS_REASON_OPTIONS;
     flowApiName = ENRICHMENT_FLOW_NAME;
@@ -79,6 +84,8 @@ export default class ContactEnrichmentWidget extends LightningElement {
                 sourceIcon: SOURCE_ICONS[s.Source__c] || 'utility:database',
                 categoryLabel: CATEGORY_LABELS[s.Category__c] || s.Category__c,
                 confidenceIcon: this.getConfidenceIcon(s.Confidence__c),
+                confidenceClass: this.getConfidenceClass(s.Confidence__c),
+                hasRationale: !!s.Rationale__c,
                 statusIcon: s.Status__c === 'Accepted' ? 'utility:check' : 'utility:close',
                 statusBadgeClass:
                     s.Status__c === 'Accepted'
@@ -97,13 +104,41 @@ export default class ContactEnrichmentWidget extends LightningElement {
         }
     }
 
+    @wire(getRecord, { recordId: '$recordId', fields: [LAST_CHECK_FIELD] })
+    wiredContact(result) {
+        this.recordLoaded = true;
+        if (result.data) {
+            this.lastCheckDate = getFieldValue(result.data, LAST_CHECK_FIELD);
+        }
+    }
+
+    get hasRunCheck() {
+        return !!this.lastCheckDate;
+    }
+
+    get lastCheckTimestamp() {
+        // lightning-relative-date-time needs a numeric timestamp (or Date);
+        // getFieldValue returns an ISO string, which renders as "Invalid date".
+        if (!this.lastCheckDate) {
+            return null;
+        }
+        const ms = new Date(this.lastCheckDate).getTime();
+        return Number.isNaN(ms) ? null : ms;
+    }
+
     get pendingSuggestions() {
         return this.suggestions
             .filter((s) => s.Status__c === 'Pending')
-            .map((s) => ({
-                ...s,
-                showDismissPanel: s.Id === this.activeDismissId
-            }));
+            .map((s) => {
+                const expanded = !!this.expandedRationale[s.Id];
+                return {
+                    ...s,
+                    showDismissPanel: s.Id === this.activeDismissId,
+                    showRationale: expanded,
+                    rationaleToggleLabel: expanded ? 'Hide Rationale' : 'See Rationale',
+                    rationaleToggleIcon: expanded ? 'utility:chevrondown' : 'utility:chevronright'
+                };
+            });
     }
 
     get isOtherReason() {
@@ -160,7 +195,23 @@ export default class ContactEnrichmentWidget extends LightningElement {
     }
 
     get showEmptyState() {
-        return !this.isLoading && !this.hasPending && !this.hasReviewedSuggestions && !this.error;
+        return (
+            !this.isLoading &&
+            this.recordLoaded &&
+            !this.hasPending &&
+            !this.hasReviewedSuggestions &&
+            !this.error
+        );
+    }
+
+    get showNeedsCheckState() {
+        // No check has ever run for this contact - prompt the user to run one.
+        return this.showEmptyState && !this.hasRunCheck;
+    }
+
+    get showUpToDateState() {
+        // A check has run and produced no open suggestions - genuinely up to date.
+        return this.showEmptyState && this.hasRunCheck;
     }
 
     get historyIcon() {
@@ -175,6 +226,18 @@ export default class ContactEnrichmentWidget extends LightningElement {
         if (confidence >= 90) return 'utility:success';
         if (confidence >= 70) return 'utility:info';
         return 'utility:warning';
+    }
+
+    getConfidenceClass(confidence) {
+        // 90+ green, 76-89 yellow, 75 and below orange.
+        if (confidence >= 90) return 'confidence-pill slds-m-left_xx-small confidence-green';
+        if (confidence >= 76) return 'confidence-pill slds-m-left_xx-small confidence-yellow';
+        return 'confidence-pill slds-m-left_xx-small confidence-orange';
+    }
+
+    toggleRationale(event) {
+        const id = event.currentTarget.dataset.id;
+        this.expandedRationale = { ...this.expandedRationale, [id]: !this.expandedRationale[id] };
     }
 
     getDismissReasonLabel(value) {
@@ -319,6 +382,9 @@ export default class ContactEnrichmentWidget extends LightningElement {
         if (status === 'FINISHED' || status === 'FINISHED_SCREEN') {
             this.showFlow = false;
             this.handleRefresh();
+            // The flow stamps Last_Enrichment_Check__c server-side; refresh LDS so the
+            // "Last checked" bar reflects the new run immediately.
+            notifyRecordUpdateAvailable([{ recordId: this.recordId }]);
         }
     }
 

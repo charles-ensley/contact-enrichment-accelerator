@@ -121,3 +121,51 @@
     border-top: 1px solid var(--slds-g-color-border-base-1, #c9c9c9);
     min-height: 8rem;
 }
+
+/* Confidence score color coding: 90+ green, 76-89 yellow, <=75 orange.
+   The pill icon inherits the text color via currentColor so both match. */
+.confidence-green,
+.confidence-yellow,
+.confidence-orange {
+    --slds-c-icon-color-foreground-default: currentColor;
+    --sds-c-icon-color-foreground-default: currentColor;
+}
+
+.confidence-green {
+    color: var(--slds-g-color-success-base-40, #2e844a);
+}
+
+.confidence-yellow {
+    color: #b8860b;
+}
+
+.confidence-orange {
+    color: var(--slds-g-color-warning-base-40, #dd7a01);
+}
+
+.rationale-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--slds-g-color-brand-base-50, #0176d3);
+    --slds-c-icon-color-foreground-default: var(--slds-g-color-brand-base-50, #0176d3);
+    --sds-c-icon-color-foreground-default: var(--slds-g-color-brand-base-50, #0176d3);
+}
+
+.rationale-toggle:hover {
+    text-decoration: underline;
+}
+
+.icon-alert {
+    --slds-c-icon-color-foreground-default: var(--slds-g-color-warning-base-40, #dd7a01);
+    --sds-c-icon-color-foreground-default: var(--slds-g-color-warning-base-40, #dd7a01);
+}
+
+.last-checked {
+    --slds-c-icon-color-foreground-default: var(--slds-g-color-neutral-base-30, #444);
+    --sds-c-icon-color-foreground-default: var(--slds-g-color-neutral-base-30, #444);
+}

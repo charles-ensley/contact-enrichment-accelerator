@@ -17,7 +17,8 @@ inspect  ->  configure  ->  generate  ->  deploy
 - **`Contact_Enrichment_Analysis`** Einstein prompt template (flex, JSON output) grounded on a record snapshot + a "Search the Web" data action.
 - **`ContactEnrichmentOutput`** Lightning type — the structured JSON schema (up to 5 suggestions).
 - **`Generate_Contact_Enrichment_Suggestions`** screen flow — runs the prompt, parses the JSON, and creates suggestion records.
-- **`contactEnrichmentWidget`** LWC + **`ContactEnrichmentController`** Apex — accept/dismiss UI with type-safe, FLS-checked write-back to the Contact.
+- **`contactEnrichmentWidget`** LWC + **`ContactEnrichmentController`** Apex — accept/dismiss UI with type-safe, FLS-checked write-back to the Contact. Shows the last-checked time, color-coded confidence, collapsible rationale per suggestion, and a clear prompt to run the first check.
+- **Custom report type** (`Contact_Enrichment_Suggestions`) + a starter **"All Enrichment Suggestions"** report in a **"Contact Enrichment"** folder — track suggestion volume, acceptance/dismissal rates, sources, and confidence out of the box.
 - **Permission sets** (`Contact_Enrichment_Rep`, `Contact_Enrichment_Admin`) + custom permission, wired with field-level security for exactly the fields you chose.
 - Optional add-ons: an inactive **LinkedIn auto-capture flow**, a **ZoomInfo simulation** scaffold, a **retention purge job**, and a clean **demo record page**.
 

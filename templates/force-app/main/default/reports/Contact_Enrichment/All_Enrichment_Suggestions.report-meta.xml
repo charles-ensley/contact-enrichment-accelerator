@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <name>All Enrichment Suggestions</name>
+    <description>Every enrichment suggestion (Pending, Accepted, Dismissed), grouped by Status then Category. Data is limited to records the running user can see.</description>
+    <reportType>Contact_Enrichment_Suggestions__c</reportType>
+    <format>Summary</format>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Contact_Enrichment_Suggestion__c$Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Contact_Enrichment_Suggestion__c$Category__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Contact__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Field_Label__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Current_Value__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Suggested_Value__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Source__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Confidence__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Reviewed_By__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$Reviewed_Date__c</field>
+    </columns>
+    <columns>
+        <field>Contact_Enrichment_Suggestion__c$CreatedDate</field>
+    </columns>
+</Report>

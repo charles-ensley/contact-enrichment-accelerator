@@ -63,6 +63,8 @@ To **add** a candidate field, copy an entry from the inspection report's "Candid
 | `options.includeRetentionJob` | Emits the schedulable purge job for old dismissed suggestions. |
 | `zoomInfo.simulationField` | Emits `Contact.Enrichment_Source_Data__c` + `scripts/seed-enrichment-simulation.apex` so you can demo a paid provider before installing it. |
 
+The reporting components (the **Contact Enrichment Suggestions** report type, the **All Enrichment Suggestions** starter report, and the **Contact Enrichment** folder) are always included — like the object, tab, and quick action — and are not gated by a toggle.
+
 ## Tuning the prompt
 
 The prompt body is assembled in [`src/lib/context.js`](../src/lib/context.js) (`buildPromptContent`). Most tuning is data-driven (edit `fields`, `sources`, `webSearchQuery`, `companyDescription`). If you need to change the guardrails or scoring guidelines themselves, edit `buildPromptContent` and re-run `generate`.

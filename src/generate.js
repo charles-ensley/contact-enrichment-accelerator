@@ -66,6 +66,8 @@ function buildPackageXml(ctx) {
   if (ctx.options.includeDemoPage) add('FlexiPage', ['Contact_Enrichment_Demo_Page']);
   add('CustomObject', ['Contact_Enrichment_Suggestion__c']);
   add('CustomTab', ['Contact_Enrichment_Suggestion__c']);
+  add('ReportType', ['Contact_Enrichment_Suggestions']);
+  add('Report', ['Contact_Enrichment', 'Contact_Enrichment/All_Enrichment_Suggestions']);
 
   const contactFields = [
     'Contact.Enrichment_Status__c',

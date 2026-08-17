@@ -6,7 +6,8 @@ npm-debug.log*
 generated/
 
 # Inspection reports (may contain org-specific field/schema details)
-reports/
+# Anchored to repo root so it does not match Salesforce report metadata under templates/
+/reports/
 
 # Customer-specific config produced by inspect/configure
 config/enrichment.config.json

@@ -53,7 +53,14 @@ sf apex run -o <alias> -f generated/scripts/seed-enrichment-simulation.apex
 
 This populates `Contact.Enrichment_Source_Data__c` so a simulated provider-sourced suggestion appears alongside the live web-search results. Set the field back to `null` to clean up.
 
-## 6. Smoke test
+## 6. Reporting
+
+The package ships a custom report type and a starter report so you can track adoption right away:
+
+- **Report type: Contact Enrichment Suggestions** — appears in the report builder for anyone who can create reports. It exposes every suggestion field plus the related Contact/Account fields (data is still gated by each user's field-level security and record access).
+- **Starter report: All Enrichment Suggestions** — a summary report grouped by **Status** then **Category**, in the **Contact Enrichment** report folder. Use it to watch suggestion volume and acceptance/dismissal rates, or clone it as a starting point for your own dashboards.
+
+## 7. Smoke test
 
 1. Open a Contact with an `Account`.
 2. Click **Run Enrichment Check** (or the widget button) and let the flow run.
