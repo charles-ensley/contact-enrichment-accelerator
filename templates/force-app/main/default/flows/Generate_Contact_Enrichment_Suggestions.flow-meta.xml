@@ -335,17 +335,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Contact</targetReference>
+            <targetReference>Has_Suggestion_2</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Suggestions</defaultConnectorLabel>
+        <defaultConnectorLabel>No Suggestion 1</defaultConnectorLabel>
         <rules>
             <name>Yes_Suggestion_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_SuggestionCount</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>formula_HasSuggestion1</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>1.0</numberValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -360,17 +360,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Contact</targetReference>
+            <targetReference>Has_Suggestion_3</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No More</defaultConnectorLabel>
+        <defaultConnectorLabel>No Suggestion 2</defaultConnectorLabel>
         <rules>
             <name>Yes_Suggestion_2</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_SuggestionCount</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>formula_HasSuggestion2</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>2.0</numberValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -385,17 +385,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Contact</targetReference>
+            <targetReference>Has_Suggestion_4</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No More</defaultConnectorLabel>
+        <defaultConnectorLabel>No Suggestion 3</defaultConnectorLabel>
         <rules>
             <name>Yes_Suggestion_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_SuggestionCount</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>formula_HasSuggestion3</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>3.0</numberValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -410,17 +410,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Contact</targetReference>
+            <targetReference>Has_Suggestion_5</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No More</defaultConnectorLabel>
+        <defaultConnectorLabel>No Suggestion 4</defaultConnectorLabel>
         <rules>
             <name>Yes_Suggestion_4</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_SuggestionCount</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>formula_HasSuggestion4</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>4.0</numberValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -437,15 +437,15 @@
         <defaultConnector>
             <targetReference>Update_Contact</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No More</defaultConnectorLabel>
+        <defaultConnectorLabel>No Suggestion 5</defaultConnectorLabel>
         <rules>
             <name>Yes_Suggestion_5</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_SuggestionCount</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>formula_HasSuggestion5</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>5.0</numberValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -487,9 +487,34 @@
         <scale>0</scale>
     </formulas>
     <formulas>
-        <name>formula_SuggestionCount</name>
+        <name>formula_HasSuggestion1</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!var_S1FieldApiName})) &amp;&amp; NOT(ISBLANK({!var_S1SuggestedValue}))</expression>
+    </formulas>
+    <formulas>
+        <name>formula_HasSuggestion2</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!var_S2FieldApiName})) &amp;&amp; NOT(ISBLANK({!var_S2SuggestedValue}))</expression>
+    </formulas>
+    <formulas>
+        <name>formula_HasSuggestion3</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!var_S3FieldApiName})) &amp;&amp; NOT(ISBLANK({!var_S3SuggestedValue}))</expression>
+    </formulas>
+    <formulas>
+        <name>formula_HasSuggestion4</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!var_S4FieldApiName})) &amp;&amp; NOT(ISBLANK({!var_S4SuggestedValue}))</expression>
+    </formulas>
+    <formulas>
+        <name>formula_HasSuggestion5</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!var_S5FieldApiName})) &amp;&amp; NOT(ISBLANK({!var_S5SuggestedValue}))</expression>
+    </formulas>
+    <formulas>
+        <name>formula_CreatedCount</name>
         <dataType>Number</dataType>
-        <expression>VALUE({!var_SuggestionCount})</expression>
+        <expression>IF({!formula_HasSuggestion1}, 1, 0) + IF({!formula_HasSuggestion2}, 1, 0) + IF({!formula_HasSuggestion3}, 1, 0) + IF({!formula_HasSuggestion4}, 1, 0) + IF({!formula_HasSuggestion5}, 1, 0)</expression>
         <scale>0</scale>
     </formulas>
     <interviewLabel>Generate Contact Enrichment Suggestions {!$Flow.CurrentDateTime}</interviewLabel>
@@ -955,7 +980,7 @@
         <inputAssignments>
             <field>Pending_Enrichment_Count__c</field>
             <value>
-                <elementReference>formula_SuggestionCount</elementReference>
+                <elementReference>formula_CreatedCount</elementReference>
             </value>
         </inputAssignments>
         <object>Contact</object>
@@ -1023,7 +1048,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>SuccessMessage</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Enrichment Analysis Complete&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Found &lt;b&gt;{!var_SuggestionCount}&lt;/b&gt; potential update(s) for this contact.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!var_OverallAssessment}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Close this dialog to review suggestions in the Contact Enrichment widget on the record page.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Enrichment Analysis Complete&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Found &lt;b&gt;{!formula_CreatedCount}&lt;/b&gt; potential update(s) for this contact.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!var_OverallAssessment}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Close this dialog to review suggestions in the Contact Enrichment widget on the record page.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>

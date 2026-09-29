@@ -123,14 +123,15 @@ export function buildPromptContent(cfg) {
       '   - Field API name - MUST be one of the exact API names listed above. Do not invent field names.\n' +
       '   - Field label - human-readable label.\n' +
       `   - Current value - the current ${crm} value.\n` +
-      '   - Suggested value - the corrected value. For picklist fields the suggested value MUST be one of that field\u2019s exact allowed values; if none fits, do not suggest that field.\n' +
+      '   - Suggested value - the corrected value. This value is REQUIRED and must be concrete and non-empty; if you cannot determine a specific corrected value, omit the suggestion entirely. For picklist fields the suggested value MUST be one of that field\u2019s exact allowed values; if none fits, do not suggest that field.\n' +
       `   - Source - MUST be one of: ${sources}. ${sourceUsage}.\n` +
       '   - Confidence - integer 1-100 (see guidelines).\n' +
       '   - Rationale - cite the specific evidence (which source and what it said).\n' +
       '   - Category - MUST be one of: Title_Change; Status_Change; Department_Change; Contact_Info; Role_Change; Company_Change; Other.\n' +
-      '4. Return up to 5 suggestions, prioritized by confidence and business impact.\n' +
+      '4. Return up to 5 suggestions, prioritized by confidence and business impact. Only include a suggestion if it has BOTH a valid Field API name AND a concrete, non-empty Suggested value.\n' +
       '5. If no discrepancies are found, set SuggestionCount to "0" and provide an OverallAssessment noting the data appears current.\n' +
-      '6. For unused suggestion slots (fewer than 5), leave those fields as empty strings.'
+      '6. SuggestionCount MUST equal the exact number of fully populated suggestions you return - count only suggestions that have both a Field API name and a non-empty Suggested value. Fill suggestion slots consecutively starting at Suggestion1 with no gaps.\n' +
+      '7. For unused suggestion slots, leave ALL of that slot\u2019s fields as empty strings. Never populate a Field API name (or any other field) for a slot whose Suggested value is empty.'
   );
 
   // Confidence guidelines
@@ -152,6 +153,8 @@ export function buildPromptContent(cfg) {
       `- Do not suggest an employment-status change to a "departed" value based only on missing, silent, or inconclusive web results. A departure suggestion requires POSITIVE evidence${departureEvidence}. The absence of a web result confirming current employment is NOT evidence of departure.\n` +
       '- Never output a suggestion whose Suggested value equals the Current value when ignoring case, spacing, and punctuation. If you cannot provide a genuinely different, corrected value, omit that suggestion.\n' +
       '- The Suggested value must be the concrete corrected value and must match your rationale.\n' +
+      '- Every suggestion counted in SuggestionCount MUST have a non-empty Suggested value and a non-empty Field API name. Never emit a suggestion slot that has a Field API name but a blank Suggested value.\n' +
+      '- Employment departures or status findings that have no concrete corrected field value belong ONLY in the OverallAssessment, never as a suggestion slot.\n' +
       '- Never suggest values containing placeholder or test terms (e.g., "test", "unknown", "tbd", "n/a"); these are often rejected by validation rules.\n' +
       '- Each suggestion must be traceable to specific evidence in the sources above.\n' +
       `- In every generated field (Rationale, OverallAssessment, and any suggested value), refer to this CRM system as "${crm}".`
